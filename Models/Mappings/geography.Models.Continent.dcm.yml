@@ -1,0 +1,64 @@
+geography\Models\Continent:
+  type:               entity
+  table:              Continent
+  repositoryClass:    geography\Repositories\ContinentRepository
+
+  oneToMany:
+    countries:
+      targetEntity:   geography\Models\Country
+      mappedBy:       continent
+      cascade:        ["persist", "remove"]
+
+  id:
+    id:
+      column:         id
+      type:           integer
+      nullable:       false
+      options:
+        unsigned:     true
+        comment:      'Continent id'
+      id:             true
+      generator:
+        strategy:     IDENTITY
+
+  fields:
+    name:
+      column:         name
+      type:           string
+      nullable:       false
+      length:         30
+      options:
+        comment:      "Continent unique name"
+    symbol:
+      column:         symbol
+      type:           string
+      nullable:       false
+      length:         3
+      options:
+        comment:      "Continent unique symbol"
+        fixed:        true
+##  BEGIN BOILER PLATE
+    statusId:
+      column:         statusId
+      type:           integer
+      nullable:       false
+      options:
+        unsigned:     true
+        comment:      "Status of the Continent"
+        default:      1
+    createdAt:
+      column:         createdAt
+      type:           datetime
+      nullable:       false
+      options:
+        comment:      "When the Continent was created"
+        default:      CURRENT_datetime
+    expiresAt:
+      column:         expiresAt
+      type:           datetime
+      nullable:       false
+      options:
+        comment:      "When the Continent expires"
+        default:      "2038-01-01 01:01:01"
+
+  lifecycleCallbacks: {  }

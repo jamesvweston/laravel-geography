@@ -1,0 +1,134 @@
+geography\Models\Country:
+  type:               entity
+  table:              Country
+  repositoryClass:    geography\Repositories\CountryRepository
+
+  manyToOne:
+    continent:
+      targetEntity:   geography\Models\Continent
+      nullable:       false
+      fetch:          LAZY
+      inversedBy:     countries
+      joinColumn:
+        name:         continentId
+        referencedColumnName: id
+
+  oneToMany:
+    postalDistricts:
+      targetEntity:   geography\Models\PostalDistrict
+      mappedBy:       country
+      cascade:        ["persist", "remove"]
+    subdivisions:
+      targetEntity:   geography\Models\Subdivision
+      mappedBy:       country
+      cascade:        ["persist", "remove"]
+    postalDistricts:
+      targetEntity:   geography\Models\PostalDistrict
+      mappedBy:       country
+      cascade:        ["persist", "remove"]
+
+
+  id:
+    id:
+      column:         id
+      type:           integer
+      nullable:       false
+      options:
+        unsigned:     true
+        comment:      'Unique id for the country'
+      id:             true
+      generator:
+        strategy:     IDENTITY
+
+  fields:
+    name:
+      column:         name
+      type:           string
+      nullable:       false
+      length:         30
+      options:
+        fixed:        false
+        comment:      "Unique name for the country"
+    iso2:
+      column:         iso2
+      type:           string
+      nullable:       false
+      length:         2
+      options:
+        fixed:        true
+        comment:      "Unique ISO2 for the country"
+    iso3:
+      column:         iso3
+      type:           string
+      nullable:       false
+      length:         3
+      options:
+        fixed:        true
+        comment:      "Unique ISO3 for the country"
+    isoNumeric:
+      column:         isoNumeric
+      type:           string
+      nullable:       false
+      length:         3
+      options:
+        fixed:        true
+        comment:      "Unique ISO Numeric for the country"
+    fipsCode:
+      column:         fipsCode
+      type:           string
+      nullable:       false
+      length:         2
+      options:
+        fixed:        true
+        comment:      "Unique FIPs Code for the country"
+    capital:
+      column:         capital
+      type:           string
+      nullable:       true
+      length:         50
+      options:
+        fixed:        false
+        comment:      "Capital for the country"
+    isEU:
+      column:         isEU
+      type:           boolean
+      nullable:       false
+      options:
+        comment:      "If country is in EU"
+    isUK:
+      column:         isUK
+      type:           boolean
+      nullable:       false
+      options:
+        comment:      "If the country is in the UK"
+    isUSTerritory:
+      column:         isUSTerritory
+      type:           boolean
+      nullable:       false
+      options:
+        comment:      "If the country is a territory of the US"
+##  BEGIN BOILER PLATE
+    statusId:
+      column:         statusId
+      type:           integer
+      nullable:       false
+      options:
+        unsigned:     true
+        comment:      "Status of the Country"
+        default:      1
+    createdAt:
+      column:         createdAt
+      type:           datetime
+      nullable:       false
+      options:
+        comment:      "When the Country was created"
+        default:      CURRENT_datetime
+    expiresAt:
+      column:         expiresAt
+      type:           datetime
+      nullable:       false
+      options:
+        comment:      "When the Country expires"
+        default:      "2038-01-01 01:01:01"
+
+  lifecycleCallbacks: {  }

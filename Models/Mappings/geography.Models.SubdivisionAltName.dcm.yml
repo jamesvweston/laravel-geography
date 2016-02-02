@@ -1,0 +1,61 @@
+geography\Models\SubdivisionAltName:
+  type:               entity
+  table:              SubdivisionAltName
+  repositoryClass:    geography\Repositories\SubdivisionAltNameRepository
+
+  manyToOne:
+    subdivision:
+      targetEntity:   geography\Models\Subdivision
+      nullable:       false
+      inversedBy:     altNames
+      fetch:          LAZY
+      joinColumn:
+        name:         subdivisionId
+        referencedColumnName: id
+
+  id:
+    id:
+      column:         id
+      type:           integer
+      nullable:       false
+      options:
+        unsigned:     true
+        comment:      'SubdivisionAltName id'
+      id:             true
+      generator:
+        strategy:     IDENTITY
+
+  fields:
+    name:
+      column:         name
+      type:           string
+      nullable:       false
+      length:         100
+      options:
+        fixed:        false
+        comment:      "Alternative name for the Subdivision"
+##  BEGIN BOILER PLATE
+    statusId:
+      column:         statusId
+      type:           integer
+      nullable:       false
+      options:
+        unsigned:     true
+        comment:      "Status of the SubdivisionAltName"
+        default:      1
+    createdAt:
+      column:         createdAt
+      type:           datetime
+      nullable:       false
+      options:
+        comment:      "When the SubdivisionAltName was created"
+        default:      CURRENT_datetime
+    expiresAt:
+      column:         expiresAt
+      type:           datetime
+      nullable:       false
+      options:
+        comment:      "When the SubdivisionAltName expires"
+        default:      "2038-01-01 01:01:01"
+
+  lifecycleCallbacks: {  }

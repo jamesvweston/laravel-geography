@@ -1,0 +1,83 @@
+geography\Models\PostalDistrict:
+  type:               entity
+  table:              PostalDistrict
+  repositoryClass:    geography\Repositories\PostalDistrictRepository
+
+  manyToOne:
+    country:
+      targetEntity:   geography\Models\Country
+      nullable:       false
+      fetch:          LAZY
+      inversedBy:     postalDistricts
+      joinColumn:
+        name:         countryId
+        referencedColumnName: id
+
+  oneToMany:
+    postalDistrictSubdivisions:
+      targetEntity:   geography\Models\PostalDistrictSubdivision
+      mappedBy:       postalDistrict
+      cascade:        ["persist", "remove"]
+
+  id:
+    id:
+      column:         id
+      type:           integer
+      nullable:       false
+      options:
+        unsigned:     true
+        comment:      'PostalDistrict id'
+      id:             true
+      generator:
+        strategy:     IDENTITY
+
+  fields:
+    name:
+      column:         name
+      type:           string
+      nullable:       false
+      length:         100
+      options:
+        fixed:        false
+        comment:      "Unique english name for the PostalDistrict"
+    french:
+      column:         french
+      type:           string
+      nullable:       false
+      length:         100
+      options:
+        fixed:        false
+        comment:      "Unique french name for the PostalDistrict"
+    symbol:
+      column:         symbol
+      type:           string
+      nullable:       false
+      length:         100
+      options:
+        fixed:        false
+        comment:      "Unique symbol for the PostalDistrict"
+##  BEGIN BOILER PLATE
+    statusId:
+      column:         statusId
+      type:           integer
+      nullable:       false
+      options:
+        unsigned:     true
+        comment:      "Status of the PostalDistrict"
+        default:      1
+    createdAt:
+      column:         createdAt
+      type:           datetime
+      nullable:       false
+      options:
+        comment:      "When the PostalDistrict was created"
+        default:      CURRENT_datetime
+    expiresAt:
+      column:         expiresAt
+      type:           datetime
+      nullable:       false
+      options:
+        comment:      "When the PostalDistrict expires"
+        default:      "2038-01-01 01:01:01"
+
+  lifecycleCallbacks: {  }
