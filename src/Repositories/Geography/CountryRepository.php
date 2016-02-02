@@ -1,4 +1,6 @@
-<?php namespace postage\Repositories;
+<?php
+
+namespace app\Repositories\Geography;
 
 use postage\Utilities\ArrayUtil;
 use Doctrine\ORM\Query;
@@ -6,7 +8,7 @@ use postage\Exceptions\ValidationFailureException;
 use postage\Helpers\InputValidator;
 use LaravelDoctrine\ORM\Pagination\Paginatable;
 
-class CountryRepository extends BaseRepository {
+class CountryRepository extends BaseGeographyRepository {
 
     use Paginatable;
 

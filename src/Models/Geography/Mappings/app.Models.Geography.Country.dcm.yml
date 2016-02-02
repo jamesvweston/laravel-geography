@@ -1,11 +1,11 @@
-geography\Models\Country:
+app\Models\Geography\Country:
   type:               entity
   table:              Country
-  repositoryClass:    geography\Repositories\CountryRepository
+  repositoryClass:    app\Repositories\Geography\CountryRepository
 
   manyToOne:
     continent:
-      targetEntity:   geography\Models\Continent
+      targetEntity:   app\Models\Geography\Continent
       nullable:       false
       fetch:          LAZY
       inversedBy:     countries

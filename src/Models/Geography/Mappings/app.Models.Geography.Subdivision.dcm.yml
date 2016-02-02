@@ -1,22 +1,30 @@
-geography\Models\PostalDistrict:
+app\Models\Geography\Subdivision:
   type:               entity
-  table:              PostalDistrict
-  repositoryClass:    geography\Repositories\PostalDistrictRepository
+  table:              Subdivision
+  repositoryClass:    app\Repositories\Geography\SubdivisionRepository
 
   manyToOne:
     country:
-      targetEntity:   geography\Models\Country
+      targetEntity:   app\Models\Geography\Country
       nullable:       false
       fetch:          LAZY
-      inversedBy:     postalDistricts
+      inversedBy:     subdivisions
       joinColumn:
         name:         countryId
         referencedColumnName: id
+    subdivisionType:
+      targetEntity:   app\Models\Geography\SubdivisionType
+      nullable:       false
+      fetch:          LAZY
+      inversedBy:     subdivisions
+      joinColumn:
+        name:         subdivisionTypeId
+        referencedColumnName: id
 
   oneToMany:
-    postalDistrictSubdivisions:
-      targetEntity:   geography\Models\PostalDistrictSubdivision
-      mappedBy:       postalDistrict
+    altNames:
+      targetEntity:   app\Models\Geography\SubdivisionAltName
+      mappedBy:       subdivision
       cascade:        ["persist", "remove"]
 
   id:
@@ -26,7 +34,7 @@ geography\Models\PostalDistrict:
       nullable:       false
       options:
         unsigned:     true
-        comment:      'PostalDistrict id'
+        comment:      'Subdivision id'
       id:             true
       generator:
         strategy:     IDENTITY
@@ -39,23 +47,23 @@ geography\Models\PostalDistrict:
       length:         100
       options:
         fixed:        false
-        comment:      "Unique english name for the PostalDistrict"
-    french:
-      column:         french
-      type:           string
-      nullable:       false
-      length:         100
-      options:
-        fixed:        false
-        comment:      "Unique french name for the PostalDistrict"
+        comment:      "Unique name for the Subdivision"
     symbol:
       column:         symbol
       type:           string
       nullable:       false
-      length:         100
+      length:         50
       options:
         fixed:        false
-        comment:      "Unique symbol for the PostalDistrict"
+        comment:      "Unique symbol for the Subdivision"
+    localSymbol:
+      column:         localSymbol
+      type:           string
+      nullable:       false
+      length:         50
+      options:
+        fixed:        false
+        comment:      "localSymbol is unique for its Country  for the Subdivision"
 ##  BEGIN BOILER PLATE
     statusId:
       column:         statusId
@@ -63,21 +71,21 @@ geography\Models\PostalDistrict:
       nullable:       false
       options:
         unsigned:     true
-        comment:      "Status of the PostalDistrict"
+        comment:      "Status of the Subdivision"
         default:      1
     createdAt:
       column:         createdAt
       type:           datetime
       nullable:       false
       options:
-        comment:      "When the PostalDistrict was created"
+        comment:      "When the Subdivision was created"
         default:      CURRENT_datetime
     expiresAt:
       column:         expiresAt
       type:           datetime
       nullable:       false
       options:
-        comment:      "When the PostalDistrict expires"
+        comment:      "When the Subdivision expires"
         default:      "2038-01-01 01:01:01"
 
   lifecycleCallbacks: {  }

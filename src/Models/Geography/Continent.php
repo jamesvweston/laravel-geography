@@ -1,4 +1,6 @@
-<?php namespace JamesVweston\LaravelGeography\Models;
+<?php
+
+namespace app\Models\Geography;
 
 use Respect\Validation\Validator as v;
 

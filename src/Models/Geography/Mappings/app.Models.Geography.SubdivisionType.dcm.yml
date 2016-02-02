@@ -1,17 +1,13 @@
-geography\Models\SubdivisionAltName:
+app\Models\Geography\SubdivisionType:
   type:               entity
-  table:              SubdivisionAltName
-  repositoryClass:    geography\Repositories\SubdivisionAltNameRepository
+  table:              SubdivisionType
+  repositoryClass:    app\Repositories\Geography\SubdivisionTypeRepository
 
-  manyToOne:
-    subdivision:
-      targetEntity:   geography\Models\Subdivision
-      nullable:       false
-      inversedBy:     altNames
-      fetch:          LAZY
-      joinColumn:
-        name:         subdivisionId
-        referencedColumnName: id
+  oneToMany:
+    subdivisions:
+      targetEntity:   app\Models\Geography\Subdivision
+      mappedBy:       subdivisionType
+      cascade:        ["persist", "remove"]
 
   id:
     id:
@@ -20,7 +16,7 @@ geography\Models\SubdivisionAltName:
       nullable:       false
       options:
         unsigned:     true
-        comment:      'SubdivisionAltName id'
+        comment:      'SubdivisionType id'
       id:             true
       generator:
         strategy:     IDENTITY
@@ -33,7 +29,7 @@ geography\Models\SubdivisionAltName:
       length:         100
       options:
         fixed:        false
-        comment:      "Alternative name for the Subdivision"
+        comment:      "name for the SubdivisionType"
 ##  BEGIN BOILER PLATE
     statusId:
       column:         statusId
@@ -41,21 +37,21 @@ geography\Models\SubdivisionAltName:
       nullable:       false
       options:
         unsigned:     true
-        comment:      "Status of the SubdivisionAltName"
+        comment:      "Status of the SubdivisionType"
         default:      1
     createdAt:
       column:         createdAt
       type:           datetime
       nullable:       false
       options:
-        comment:      "When the SubdivisionAltName was created"
+        comment:      "When the SubdivisionType was created"
         default:      CURRENT_datetime
     expiresAt:
       column:         expiresAt
       type:           datetime
       nullable:       false
       options:
-        comment:      "When the SubdivisionAltName expires"
+        comment:      "When the SubdivisionType expires"
         default:      "2038-01-01 01:01:01"
 
   lifecycleCallbacks: {  }

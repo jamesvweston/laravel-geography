@@ -1,9 +1,11 @@
-<?php namespace postage\Repositories;
+<?php
+
+namespace app\Repositories\Geography;
 
 use postage\Utilities\ArrayUtil;
 use Doctrine\ORM\Query;
 
-class PostalDistrictRepository extends BaseRepository {
+class PostalDistrictRepository extends BaseGeographyRepository {
 
     function where($params) {
         $qb = $this->_em->createQueryBuilder();

@@ -1,10 +1,11 @@
-<?php namespace postage\Models;
+<?php
+
+namespace app\Models\Geography;
 
 use Respect\Validation\Validator as v;
-use Doctrine\Common\Collections\ArrayCollection;
 use Auth;
 
-class SubdivisionType extends BaseModel implements \JsonSerializable {
+class SubdivisionAltName extends BaseModel implements \JsonSerializable {
 
     public $id;
     public $name;
@@ -17,7 +18,7 @@ class SubdivisionType extends BaseModel implements \JsonSerializable {
     //  END manyToOne relationships
 
     //  BEGIN oneToMany relationships
-    protected $subdivisions;
+    protected $subdivision;
     //  END oneToMany relationships
 
     public function __construct ($data = null) {
@@ -34,8 +35,6 @@ class SubdivisionType extends BaseModel implements \JsonSerializable {
     protected function getValidationRules() {
         v::with('postage\\Models\\Validation\\');
 
-        $this->subdivisions                     =       new ArrayCollection();
-
         return [
             v::attribute('symbol',                      v::notEmpty()->alpha()->length(3, 50)->UniqueCarrierSymbol()),
             v::attribute('routeTransaction',            v::instance('postage\\Models\\RouteTransaction')),
@@ -46,17 +45,32 @@ class SubdivisionType extends BaseModel implements \JsonSerializable {
     }
 
     public function jsonSerialize() {
-        $subdivisionType                        =       call_user_func('get_object_vars', $this);
-        return array_except($subdivisionType, ['__initializer__', '__cloner__', '__isInitialized__']);
+        $subdivisionAltName                     =       call_user_func('get_object_vars', $this);
+        $subdivisionAltName['subdivision']      =       $this->subdivision;
+        return array_except($subdivisionAltName, ['__initializer__', '__cloner__', '__isInitialized__']);
     }
 
+
+    // BEGIN Getters
     /**
-     * Get an ArrayCollection of Subdivision objects that use this SubdivisionType
-     * @return ArrayCollection
+     * Get the Subdivision object for the SubdivisionAltName
+     * @return Subdivision
      */
-    public function getSubdivisions() {
-        return $this->subdivisions;
+    public function getSubdivision() {
+        return $this->subdivision;
     }
+    // END Getters
+
+
+    // BEGIN Setters
+    /**
+     * Set the Subdivision for the SubdivisionAltName
+     * @param Subdivision $subdivision
+     */
+    public function setSubdivision(Subdivision $subdivision) {
+        $this->subdivision = $subdivision;
+    }
+    // END Setters
 
 
 }

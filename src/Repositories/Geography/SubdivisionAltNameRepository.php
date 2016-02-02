@@ -1,8 +1,11 @@
-<?php namespace postage\Repositories;
+<?php
+
+namespace app\Repositories\Geography;
 
 use postage\Utilities\ArrayUtil;
 
-class SubdivisionAltNameRepository extends BaseRepository {
+class SubdivisionAltNameRepository extends BaseGeographyRepository
+{
 
     function where($query) {
         $qb = $this->_em->createQueryBuilder()

@@ -1,20 +1,13 @@
-geography\Models\PostalDistrictSubdivision:
+app\Models\Geography\SubdivisionAltName:
   type:               entity
-  table:              PostalDistrictSubdivision
-  repositoryClass:    geography\Repositories\PostalDistrictSubdivisionRepository
+  table:              SubdivisionAltName
+  repositoryClass:    app\Repositories\Geography\SubdivisionAltNameRepository
 
   manyToOne:
-    postalDistrict:
-      targetEntity:   geography\Models\PostalDistrict
-      nullable:       false
-      fetch:          LAZY
-      inversedBy:     postalDistrictSubdivisions
-      joinColumn:
-        name:         postalDistrictId
-        referencedColumnName: id
     subdivision:
-      targetEntity:   geography\Models\Subdivision
+      targetEntity:   app\Models\Geography\Subdivision
       nullable:       false
+      inversedBy:     altNames
       fetch:          LAZY
       joinColumn:
         name:         subdivisionId
@@ -27,12 +20,20 @@ geography\Models\PostalDistrictSubdivision:
       nullable:       false
       options:
         unsigned:     true
-        comment:      'PostalDistrictSubdivision id'
+        comment:      'SubdivisionAltName id'
       id:             true
       generator:
         strategy:     IDENTITY
 
   fields:
+    name:
+      column:         name
+      type:           string
+      nullable:       false
+      length:         100
+      options:
+        fixed:        false
+        comment:      "Alternative name for the Subdivision"
 ##  BEGIN BOILER PLATE
     statusId:
       column:         statusId
@@ -40,21 +41,21 @@ geography\Models\PostalDistrictSubdivision:
       nullable:       false
       options:
         unsigned:     true
-        comment:      "Status of the PostalDistrictSubdivision"
+        comment:      "Status of the SubdivisionAltName"
         default:      1
     createdAt:
       column:         createdAt
       type:           datetime
       nullable:       false
       options:
-        comment:      "When the PostalDistrictSubdivision was created"
+        comment:      "When the SubdivisionAltName was created"
         default:      CURRENT_datetime
     expiresAt:
       column:         expiresAt
       type:           datetime
       nullable:       false
       options:
-        comment:      "When the PostalDistrictSubdivision expires"
+        comment:      "When the SubdivisionAltName expires"
         default:      "2038-01-01 01:01:01"
 
   lifecycleCallbacks: {  }

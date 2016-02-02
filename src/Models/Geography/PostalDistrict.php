@@ -1,22 +1,28 @@
-<?php namespace postage\Models;
+<?php
+
+namespace app\Models\Geography;
 
 use Respect\Validation\Validator as v;
+use Doctrine\Common\Collections\ArrayCollection;
 use Auth;
 
-class SubdivisionAltName extends BaseModel implements \JsonSerializable {
+class PostalDistrict extends BaseModel implements \JsonSerializable {
 
     public $id;
     public $name;
+    public $french;
+    public $symbol;
     protected $statusId;
     protected $createdAt;
     protected $expiresAt;
 
     //  BEGIN manyToOne relationships
+    protected $country;
     protected $routeTransaction;
     //  END manyToOne relationships
 
     //  BEGIN oneToMany relationships
-    protected $subdivision;
+    protected $postalDistrictSubdivisions;
     //  END oneToMany relationships
 
     public function __construct ($data = null) {
@@ -24,15 +30,12 @@ class SubdivisionAltName extends BaseModel implements \JsonSerializable {
         $this->statusId                         =       1;
         $this->createdAt                        =       new \DateTime();
         $this->expiresAt                        =       new \DateTime('2038-01-01 01:01:01');
-        $this->routeTransaction                 =       Auth::getSession()->get('routeTransaction');
 
         if (is_array($data)) {
         }
     }
 
     protected function getValidationRules() {
-        v::with('postage\\Models\\Validation\\');
-
         return [
             v::attribute('symbol',                      v::notEmpty()->alpha()->length(3, 50)->UniqueCarrierSymbol()),
             v::attribute('routeTransaction',            v::instance('postage\\Models\\RouteTransaction')),
@@ -43,30 +46,51 @@ class SubdivisionAltName extends BaseModel implements \JsonSerializable {
     }
 
     public function jsonSerialize() {
-        $subdivisionAltName                     =       call_user_func('get_object_vars', $this);
-        $subdivisionAltName['subdivision']      =       $this->subdivision;
-        return array_except($subdivisionAltName, ['__initializer__', '__cloner__', '__isInitialized__']);
+        $PostalDistrict                         =       call_user_func('get_object_vars', $this);
+        return array_except($PostalDistrict, ['__initializer__', '__cloner__', '__isInitialized__']);
     }
 
 
     // BEGIN Getters
+
     /**
-     * Get the Subdivision object for the SubdivisionAltName
-     * @return Subdivision
+     * Get the Country object that owns the PostalDistrict
+     * @return Country
      */
-    public function getSubdivision() {
-        return $this->subdivision;
+    public function getCountry() {
+        return $this->country;
+    }
+
+    /**
+     * Get an ArrayCollection of Subdivision objects that this PostalDistrict owns
+     * @return ArrayCollection
+     */
+    public function getSubdivisions() {
+        $postalDistrictSubdivisions = $this->postalDistrictSubdivisions->toArray();
+        $subdivisions = [];
+        foreach ($postalDistrictSubdivisions AS $tempA) {
+            $subdivisions[] = $tempA->getSubdivision();
+        }
+        return $subdivisions;
     }
     // END Getters
 
 
     // BEGIN Setters
     /**
-     * Set the Subdivision for the SubdivisionAltName
+     * Set the Country that owns the PostalDistrict
+     * @param Country $country
+     */
+    public function setCountry(Country $country) {
+        $this->country = $country;
+    }
+
+    /**
+     * Add a Subdivision object that the PostalDistrict owns
      * @param Subdivision $subdivision
      */
-    public function setSubdivision(Subdivision $subdivision) {
-        $this->subdivision = $subdivision;
+    public function addSubdivision(Subdivision $subdivision) {
+        $this->postalDistrictSubdivisions->add($subdivision);
     }
     // END Setters
 

@@ -1,9 +1,12 @@
-<?php namespace postage\Repositories;
+<?php
+
+namespace app\Repositories\Geography;
 
 use postage\Utilities\ArrayUtil;
 use postage\Exceptions\ValidationFailureException;
 
-class SubdivisionTypeRepository extends BaseRepository {
+class SubdivisionTypeRepository extends BaseGeographyRepository
+{
 
     function where($params) {
         $qb = $this->_em->createQueryBuilder();

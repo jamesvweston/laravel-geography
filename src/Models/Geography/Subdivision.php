@@ -1,4 +1,6 @@
-<?php namespace postage\Models;
+<?php
+
+namespace app\Models\Geography;
 
 use Respect\Validation\Validator as v;
 use Doctrine\Common\Collections\ArrayCollection;

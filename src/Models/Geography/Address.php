@@ -1,9 +1,10 @@
-<?php namespace postage\Models;
+<?php
+
+namespace app\Models\Geography;
 
 use Respect\Validation\Exceptions\ValidationException;
 use Respect\Validation\Validator as v;
 use postage\Utilities\ArrayUtil;
-use Auth;
 
 class Address extends BaseModel implements \JsonSerializable {
 
