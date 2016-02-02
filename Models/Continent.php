@@ -1,4 +1,4 @@
-<?php namespace postage\Models;
+<?php namespace JamesVweston\LaravelGeography\Models;
 
 use Respect\Validation\Validator as v;
 

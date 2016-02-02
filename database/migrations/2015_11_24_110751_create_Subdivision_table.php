@@ -25,6 +25,12 @@ class CreateSubdivisionTable extends Migration {
 
         DB::statement("ALTER TABLE Subdivision ADD CONSTRAINT unique_countryId_localSymbol
                           UNIQUE (countryId, localSymbol)");
+
+        Schema::table('Subdivision', function (Blueprint $table) {
+            $table->foreign('countryId')->references('id')->on('Country');
+            $table->foreign('subdivisionTypeId')->references('id')->on('SubdivisionType');
+        });
+
     }
 
     public function down () {

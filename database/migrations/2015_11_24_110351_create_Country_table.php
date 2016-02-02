@@ -8,7 +8,6 @@ class CreateCountryTable extends Migration {
 
     public function up () {
         Schema::create('Country', function (Blueprint $table) {
-            $table->integer('currencyId')->unsigned()->index()->nullable();
             $table->integer('continentId')->unsigned()->index();
             $table->increments('id')->unsigned();
             $table->string('name', 30)->unique();
@@ -27,6 +26,11 @@ class CreateCountryTable extends Migration {
             $table->datetime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'))->index();
             $table->datetime('expiresAt')->default('2038-01-01 01:01:01')->index();
         });
+
+        Schema::table('Country', function (Blueprint $table) {
+            $table->foreign('continentId')->references('id')->on('Continent');
+        });
+
     }
 
     public function down () {

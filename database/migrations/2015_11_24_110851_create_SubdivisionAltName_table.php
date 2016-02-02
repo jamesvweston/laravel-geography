@@ -18,6 +18,11 @@ class CreateSubdivisionAltNameTable extends Migration {
             $table->datetime('createdAt')->default(DB::raw('CURRENT_TIMESTAMP'))->index();
             $table->datetime('expiresAt')->default('2038-01-01 01:01:01')->index();
         });
+
+        Schema::table('SubdivisionAltName', function (Blueprint $table) {
+            $table->foreign('subdivisionId')->references('id')->on('Subdivision');
+        });
+
     }
 
     public function down () {

@@ -21,6 +21,10 @@ class CreatePostalDistrictTable extends Migration {
             $table->datetime('expiresAt')->default('2038-01-01 01:01:01')->index();
         });
 
+        Schema::table('PostalDistrict', function (Blueprint $table) {
+            $table->foreign('countryId')->references('id')->on('Country');
+        });
+
     }
 
     public function down () {

@@ -19,6 +19,11 @@ class CreatePostalDistrictSubdivisionTable extends Migration {
             $table->datetime('expiresAt')->default('2038-01-01 01:01:01')->index();
         });
 
+        Schema::table('PostalDistrictSubdivision', function (Blueprint $table) {
+            $table->foreign('postalDistrictId')->references('id')->on('PostalDistrict');
+            $table->foreign('subdivisionId')->references('id')->on('Subdivision');
+        });
+
     }
 
     public function down () {
