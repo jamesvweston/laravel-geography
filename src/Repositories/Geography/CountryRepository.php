@@ -35,7 +35,7 @@ class CountryRepository extends BaseGeographyRepository {
             $qb->select(['country']);
         }
 
-        $qb->from('postage\Models\Country', 'country')
+        $qb->from('app\Models\Geography\Country', 'country')
             ->innerJoin('country.continent', 'continent', Query\Expr\Join::ON);
 
         if (!is_null($query['continents'])) {

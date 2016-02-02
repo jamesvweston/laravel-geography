@@ -17,7 +17,7 @@ class SubdivisionTypeRepository extends BaseGeographyRepository
             $qb->select(['subdivisionTypes']);
         }
 
-        $qb->from('postage\Models\SubdivisionType', 'subdivisionTypes');
+        $qb->from('app\Models\Geography\SubdivisionType', 'subdivisionTypes');
 
         // Order by
         if (is_null(ArrayUtil::get($params['orderBy'], NULL))) {

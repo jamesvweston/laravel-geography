@@ -2,7 +2,6 @@
 
 namespace app\Repositories\Geography;
 
-use postage\Utilities\ArrayUtil;
 
 class SubdivisionAltNameRepository extends BaseGeographyRepository
 {
@@ -10,7 +9,7 @@ class SubdivisionAltNameRepository extends BaseGeographyRepository
     function where($query) {
         $qb = $this->_em->createQueryBuilder()
             ->select(['subdivisionAltName'])
-            ->from('postage\Models\SubdivisionAltName', 'subdivisionAltName');
+            ->from('app\Models\Geography\SubdivisionAltName', 'subdivisionAltName');
 
 
         // Order by

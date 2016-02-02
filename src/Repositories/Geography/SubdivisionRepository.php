@@ -25,7 +25,7 @@ class SubdivisionRepository extends BaseGeographyRepository
             $qb->select(['subdivision']);
         }
 
-        $qb->from('postage\Models\Subdivision', 'subdivision')
+        $qb->from('app\Models\Geography\Subdivision', 'subdivision')
             ->innerJoin('subdivision.country', 'country', Query\Expr\Join::ON)
             ->innerJoin('subdivision.subdivisionType', 'subdivisionType', Query\Expr\Join::ON);
 

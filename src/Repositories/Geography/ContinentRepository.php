@@ -2,13 +2,11 @@
 
 namespace app\Repositories\Geography;
 
-use postage\Utilities\ArrayUtil;
-use postage\Utilities\StringUtil;
-use postage\Exceptions\ValidationFailureException;
 use LaravelDoctrine\ORM\Pagination\Paginatable;
-use postage\Helpers\InputValidator;
+use Doctrine\ORM\Query;
 
-class ContinentRepository extends BaseGeographyRepository {
+class ContinentRepository extends BaseGeographyRepository
+{
 
     use Paginatable;
 
@@ -23,7 +21,7 @@ class ContinentRepository extends BaseGeographyRepository {
             $qb->select(['continents']);
         }
 
-        $qb->from('postage\Models\Continent', 'continents');
+        $qb->from('app\Models\Geography\Continent', 'continents');
 
         $qb->orderBy($query['orderBy']['field'], $query['orderBy']['order']);
 

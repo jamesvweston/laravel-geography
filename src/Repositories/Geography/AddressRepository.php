@@ -2,6 +2,7 @@
 
 namespace app\Repositories\Geography;
 
-class AddressRepository extends BaseGeographyRepository {
+class AddressRepository extends BaseGeographyRepository
+{
 
 }

@@ -2,7 +2,10 @@
 
 namespace app\Repositories\Geography;
 
-class BaseGeographyRepository {
+use Doctrine\ORM\EntityRepository;
+
+class BaseGeographyRepository extends EntityRepository
+{
 
 
 }

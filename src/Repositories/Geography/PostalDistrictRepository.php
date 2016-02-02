@@ -21,7 +21,7 @@ class PostalDistrictRepository extends BaseGeographyRepository {
             $qb->select(['postalDistrict']);
         }
 
-        $qb->from('postage\Models\PostalDistrict', 'postalDistrict')
+        $qb->from('app\Models\Geography\PostalDistrict', 'postalDistrict')
             ->innerJoin('postalDistrict.country', 'country', Query\Expr\Join::ON);
 
 
