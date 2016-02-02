@@ -1,18 +1,18 @@
-geography\Models\Address:
+JamesVweston\LaravelGeography\Models\Address:
   type:               entity
   table:              Address
-  repositoryClass:    geography\Repositories\AddressRepository
+  repositoryClass:    JamesVweston\LaravelGeography\Repositories\AddressRepository
 
   manyToOne:
     subdivision:
-      targetEntity:   geography\Repositories\Subdivision
+      targetEntity:   JamesVweston\LaravelGeography\Repositories\Subdivision
       nullable:       true
       fetch:          LAZY
       joinColumn:
         name:         subdivisionId
         referencedColumnName: id
     country:
-      targetEntity:   geography\Repositories\Country
+      targetEntity:   JamesVweston\LaravelGeography\Repositories\Country
       nullable:       false
       fetch:          EAGER
       joinColumn:

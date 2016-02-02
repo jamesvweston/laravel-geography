@@ -1,4 +1,4 @@
-<?php namespace postage\Repositories;
+<?php namespace geography\Repositories;
 
 use postage\Utilities\ArrayUtil;
 use postage\Utilities\StringUtil;

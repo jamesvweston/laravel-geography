@@ -1,11 +1,11 @@
-geography\Models\Continent:
+JamesVweston\LaravelGeography\Models\Continent:
   type:               entity
   table:              Continent
-  repositoryClass:    geography\Repositories\ContinentRepository
+  repositoryClass:    JamesVweston\LaravelGeography\Repositories\ContinentRepository
 
   oneToMany:
     countries:
-      targetEntity:   geography\Models\Country
+      targetEntity:   JamesVweston\LaravelGeography\Models\Country
       mappedBy:       continent
       cascade:        ["persist", "remove"]
 
