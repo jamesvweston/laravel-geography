@@ -1,5 +1,5 @@
 # Laravel Geography
-A PHP library that wraps Fulfillment's Postage API for easy use
+A Laravel starter pack for geography related entities
 
 ### License
 
