@@ -5,7 +5,8 @@ namespace app\Models\Geography;
 use Respect\Validation\Validator as v;
 use app\Utilities\ArrayUtil;
 
-class Address extends BaseModel implements \JsonSerializable {
+class Address extends BaseModel implements \JsonSerializable
+{
 
     /**
      * Auto-incrementing id
@@ -74,7 +75,8 @@ class Address extends BaseModel implements \JsonSerializable {
      */
     protected $country;
 
-    public function __construct ($data = null) {
+    public function __construct ($data = null)
+    {
         $this->id                               =       NULL;
         $this->statusId                         =       1;
         $this->createdAt                        =       new \DateTime();
@@ -95,7 +97,8 @@ class Address extends BaseModel implements \JsonSerializable {
         }
     }
 
-    protected function getValidationRules() {
+    protected function getValidationRules()
+    {
         return [
             v::attribute('name',                        v::notEmpty()->length(3, 50)),
             v::attribute('company',                     v::length(NULL, 50)),
@@ -115,49 +118,50 @@ class Address extends BaseModel implements \JsonSerializable {
         ];
     }
 
-    public function jsonSerialize() {
+    public function jsonSerialize()
+    {
         $address                                =       $this->getPublicVars();
         $address['subdivision']                 =       !is_null($this->subdivision) ? $this->subdivision->jsonSerialize() : NULL;
         $address['country']                     =       !is_null($this->country) ? $this->country->jsonSerialize() : NULL;
         return array_except($address, ['__initializer__', '__cloner__', '__isInitialized__']);
     }
 
-    // BEGIN Getters
-
     /**
      * Get the Country for the Address
-     * @return Country
+     * @return      Country
      */
-    public function getCountry() {
+    public function getCountry()
+    {
         return $this->country;
     }
 
     /**
      * Get the Subdivision for the Address
-     * @return Subdivision
+     * @return      Subdivision
      */
-    public function getSubdivision() {
+    public function getSubdivision()
+    {
         return $this->subdivision;
     }
     // END Getters
 
 
-    // BEGIN Setters
-
     /**
      * Set the Country for the Address
-     * @param Country $country
+     * @param       Country             $country
      */
-    public function setCountry(Country $country) {
+    public function setCountry(Country $country)
+    {
         $this->country = $country;
     }
 
     /**
      * Set the Subdivision for the Address
-     * @param Subdivision $subdivision
+     * @param       Subdivision         $subdivision
      */
-    public function setSubdivision(Subdivision $subdivision) {
+    public function setSubdivision(Subdivision $subdivision)
+    {
         $this->subdivision = $subdivision;
     }
-    // END Setters
+
 }
