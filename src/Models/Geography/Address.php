@@ -1,10 +1,9 @@
 <?php
-
 namespace app\Models\Geography;
 
-use Respect\Validation\Exceptions\ValidationException;
+
 use Respect\Validation\Validator as v;
-use postage\Utilities\ArrayUtil;
+use app\Utilities\ArrayUtil;
 
 class Address extends BaseModel implements \JsonSerializable {
 
@@ -23,13 +22,14 @@ class Address extends BaseModel implements \JsonSerializable {
     protected $expiresAt;
 
 
-    //  BEGIN manyToOne relationships
+    /**
+     * @var     Subdivision
+     */
     protected $subdivision;
+    /**
+     * @var     Country
+     */
     protected $country;
-    //  END manyToOne relationships
-
-    //  BEGIN oneToMany relationships
-    //  END oneToMany relationships
 
     public function __construct ($data = null) {
         $this->id                               =       NULL;
