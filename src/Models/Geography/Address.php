@@ -7,18 +7,61 @@ use app\Utilities\ArrayUtil;
 
 class Address extends BaseModel implements \JsonSerializable {
 
+    /**
+     * Auto-incrementing id
+     * @var         int
+     */
     public $id;
+
+    /**
+     * Name of individual
+     * @var         string
+     */
     public $name;
+    /**
+     * Company name
+     * @var         string
+     */
     public $company;
+    /**
+     * @var         String
+     */
     public $street1;
+    /**
+     * @var         String
+     */
     public $street2;
+    /**
+     * @var         String
+     */
     public $city;
+    /**
+     * @var         String
+     */
     public $stateProvince;
+    /**
+     * @var         String
+     */
     public $postalCode;
+    /**
+     * @var         String
+     */
     public $phone;
+    /**
+     * @var         String
+     */
     public $email;
+    /**
+     * @var         int
+     */
     protected $statusId;
+    /**
+     * @var         \DateTime
+     */
     protected $createdAt;
+    /**
+     * @var         \DateTime
+     */
     protected $expiresAt;
 
 
