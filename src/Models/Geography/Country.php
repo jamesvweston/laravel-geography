@@ -1,6 +1,6 @@
 <?php
-
 namespace app\Models\Geography;
+
 
 use Respect\Validation\Validator as v;
 
@@ -68,11 +68,11 @@ class Country implements \JsonSerializable {
             v::attribute('isoNumeric',                  v::notEmpty()->length(3, 3)->int()),
             v::attribute('fipsCode',                    v::notEmpty()->length(2, 2)->int()),
             v::attribute('capital',                     v::length(null, 50)->alpha()),
-            v::attribute('continent',                   v::instance('postage\\Models\\Continent')),
+            v::attribute('continent',                   v::instance('app\\Models\\Continent')),
             v::attribute('isEU',                        v::bool()),
             v::attribute('isUK',                        v::bool()),
             v::attribute('isUSTerritory',               v::bool()),
-            v::attribute('routeTransaction',            v::instance('postage\\Models\\RouteTransaction')),
+            v::attribute('routeTransaction',            v::instance('app\\Models\\RouteTransaction')),
             v::attribute('statusId',                    v::notEmpty()->int()->positive()),
             v::attribute('createdAt',                   v::notEmpty()->date()),
             v::attribute('expiresAt',                   v::notEmpty()->date()),
@@ -195,7 +195,7 @@ class Country implements \JsonSerializable {
      */
     public function getZoneCountry() {
         if ($this->isUSTerritory AND $this->iso2 != 'US') {
-            $countryRepo                        =       RegistryManager::getManager()->getRepository('postage\Models\Country');
+            $countryRepo                        =       RegistryManager::getManager()->getRepository('app\Models\Country');
             $usCountry                          =       $countryRepo->findOneBy(['iso2' => 'US']);
             return $usCountry;
         } else {

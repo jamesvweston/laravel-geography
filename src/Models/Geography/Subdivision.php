@@ -1,6 +1,6 @@
 <?php
-
 namespace app\Models\Geography;
+
 
 use Respect\Validation\Validator as v;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -45,7 +45,7 @@ class Subdivision extends BaseModel implements \JsonSerializable {
         return [
             v::attribute('symbol',                      v::notEmpty()->alpha()->length(3, 50)),
             v::attribute('localSymbol',                 v::notEmpty()->alpha()->length(1, 50)),
-            v::attribute('routeTransaction',            v::instance('postage\\Models\\RouteTransaction')),
+            v::attribute('routeTransaction',            v::instance('app\\Models\\RouteTransaction')),
             v::attribute('statusId',                    v::notEmpty()->int()->positive()),
             v::attribute('createdAt',                   v::notEmpty()->date()),
             v::attribute('expiresAt',                   v::notEmpty()->date()),

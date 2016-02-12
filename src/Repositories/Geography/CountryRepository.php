@@ -2,10 +2,10 @@
 
 namespace app\Repositories\Geography;
 
-use postage\Utilities\ArrayUtil;
+use app\Utilities\ArrayUtil;
 use Doctrine\ORM\Query;
-use postage\Exceptions\ValidationFailureException;
-use postage\Helpers\InputValidator;
+use app\Exceptions\ValidationFailureException;
+use app\Helpers\InputValidator;
 use LaravelDoctrine\ORM\Pagination\Paginatable;
 
 class CountryRepository extends BaseGeographyRepository {

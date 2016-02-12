@@ -2,10 +2,10 @@
 
 namespace app\Repositories\Geography;
 
-use postage\Utilities\ArrayUtil;
+use app\Utilities\ArrayUtil;
 use Doctrine\ORM\Query;
-use postage\Utilities\StringUtil;
-use postage\Exceptions\ValidationFailureException;
+use app\Utilities\StringUtil;
+use app\Exceptions\ValidationFailureException;
 
 class SubdivisionRepository extends BaseGeographyRepository
 {

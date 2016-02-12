@@ -2,7 +2,7 @@
 
 namespace app\Repositories\Geography;
 
-use postage\Utilities\ArrayUtil;
+use app\Utilities\ArrayUtil;
 use Doctrine\ORM\Query;
 
 class PostalDistrictRepository extends BaseGeographyRepository {
