@@ -1,9 +1,8 @@
 <?php
-
 namespace app\Repositories\Geography;
 
+
 use app\Utilities\ArrayUtil;
-use app\Exceptions\ValidationFailureException;
 
 class SubdivisionTypeRepository extends BaseGeographyRepository
 {

@@ -1,6 +1,6 @@
 <?php
-
 namespace app\Repositories\Geography;
+
 
 use LaravelDoctrine\ORM\Pagination\Paginatable;
 use Doctrine\ORM\Query;

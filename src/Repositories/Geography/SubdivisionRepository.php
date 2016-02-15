@@ -1,11 +1,9 @@
 <?php
-
 namespace app\Repositories\Geography;
+
 
 use app\Utilities\ArrayUtil;
 use Doctrine\ORM\Query;
-use app\Utilities\StringUtil;
-use app\Exceptions\ValidationFailureException;
 
 class SubdivisionRepository extends BaseGeographyRepository
 {
