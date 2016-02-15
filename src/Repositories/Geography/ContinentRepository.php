@@ -17,7 +17,7 @@ class ContinentRepository extends BaseGeographyRepository
      * @param       int                 $id                 Id to query against
      * @return      Continent|null
      */
-    public function getById($id)
+    public function getOneById($id)
     {
         return $this->find($id);
     }
@@ -27,7 +27,7 @@ class ContinentRepository extends BaseGeographyRepository
      * @param       string              $name               Name to query against
      * @return      Continent|null
      */
-    public function getByName($name)
+    public function getOneByName($name)
     {
         return $this->findOneBy(['name' => $name]);
     }
@@ -37,7 +37,7 @@ class ContinentRepository extends BaseGeographyRepository
      * @param       string              $symbol             Symbol to query against
      * @return      Continent|null
      */
-    public function getBySymbol($symbol)
+    public function getOneBySymbol($symbol)
     {
         return $this->findOneBy(['symbol' => $symbol]);
     }
