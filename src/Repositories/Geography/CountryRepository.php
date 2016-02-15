@@ -70,4 +70,38 @@ class CountryRepository extends BaseGeographyRepository {
     {
         return $this->findOneBy(['fipsCode' => $fipsCode]);
     }
+
+    /**
+     * Get all Countries in the European Union
+     * @return      Country[]
+     */
+    public function getAllEuropeanCountries()
+    {
+        return $this->findBy([
+            'isEU'      =>  true
+        ]);
+    }
+
+    /**
+     * Get all Countries in the United Kingdom
+     * @return      Country[]
+     */
+    public function getAllUnitedKingdomCountries()
+    {
+        return $this->findBy([
+            'isUK'      =>  true
+        ]);
+    }
+
+    /**
+     * Get all Countries that are US Territories
+     * @return      Country[]
+     */
+    public function getAllUSTerritoryCountries()
+    {
+        return $this->findBy([
+            'isUSTerritory'      =>  true
+        ]);
+    }
+
 }
