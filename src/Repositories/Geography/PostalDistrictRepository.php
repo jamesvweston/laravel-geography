@@ -35,13 +35,17 @@ class PostalDistrictRepository extends BaseGeographyRepository
     /**
      * Get a single PostalDistrict object by its symbol
      * @param       string              $symbol             Symbol to query against
-     * @return      PostalDistrict[]
+     * @return      PostalDistrict|null
      */
     public function getOneBySymbol($symbol)
     {
         return $this->findOneBy(['symbol' => $symbol]);
     }
 
+    /**
+     * Get all Canadian Postal Districts
+     * @return      PostalDistrict[]
+     */
     public function getAllCanadianPostalDistricts()
     {
         return $this->findBy([
