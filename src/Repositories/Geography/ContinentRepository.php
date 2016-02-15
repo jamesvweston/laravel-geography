@@ -24,14 +24,17 @@ class ContinentRepository extends BaseGeographyRepository
     {
         $pagination                 =   parent::buildPagination($query, $maxLimit, $maxPage);
         $qb                         =   $this->_em->createQueryBuilder();
-        $qb->from('postage\Models\Continent', 'continent')
-            ->leftJoin('continent.countries', 'country', Query\Expr\Join::ON);
+        $qb->from('postage\Models\Continent', 'continent');
 
         if (!is_null(ArrayUtil::get($query['continentIds'])))
             $qb->andWhere($qb->expr()->in('continent.id', $query['continentIds']));
 
         if (!is_null(ArrayUtil::get($query['countryIds'])))
+        {
+            $qb->leftJoin('continent.countries', 'country', Query\Expr\Join::ON);
             $qb->andWhere($qb->expr()->in('country.id', $query['countryIds']));
+        }
+
 
         $qb->orderBy('continent.id', 'ASC');
 
