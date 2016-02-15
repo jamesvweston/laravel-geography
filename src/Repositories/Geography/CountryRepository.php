@@ -71,6 +71,86 @@ class CountryRepository extends BaseGeographyRepository {
         return $this->findOneBy(['fipsCode' => $fipsCode]);
     }
 
+
+
+    /**
+     * Get the Australia Country object
+     * @return      Country|null
+     */
+    public function getAustralia()
+    {
+        return $this->find(8);
+    }
+
+    /**
+     * Get the Canada Country object
+     * @return      Country|null
+     */
+    public function getCanada()
+    {
+        return $this->find(27);
+    }
+
+    /**
+     * Get the China Country object
+     * @return      Country|null
+     */
+    public function getChina()
+    {
+        return $this->find(32);
+    }
+
+    /**
+     * Get the France Country object
+     * @return      Country|null
+     */
+    public function getFrance()
+    {
+        return $this->find(47);
+    }
+
+    /**
+     * Get the Germany Country object
+     * @return      Country|null
+     */
+    public function getGermany()
+    {
+        return $this->find(47);
+    }
+
+    /**
+     * Get the Mexico Country object
+     * @return      Country|null
+     */
+    public function getMexico()
+    {
+        return $this->find(104);
+    }
+
+    /**
+     * Get the United Kingdom Country object
+     * @return      Country|null
+     */
+    public function getUnitedKingdom()
+    {
+        return $this->find(50);
+    }
+
+    /**
+     * Get the United States Country object
+     * @return      Country|null
+     */
+    public function getUnitedStates()
+    {
+        return $this->find(151);
+    }
+
+
+
+
+
+
+
     /**
      * Get all Countries in the European Union
      * @return      Country[]
