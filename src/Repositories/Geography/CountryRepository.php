@@ -3,12 +3,65 @@ namespace app\Repositories\Geography;
 
 
 use app\Models\Geography\Country;
+use app\Utilities\ArrayUtil;
 use Doctrine\ORM\Query;
 use LaravelDoctrine\ORM\Pagination\Paginatable;
 
 class CountryRepository extends BaseGeographyRepository {
 
     use Paginatable;
+
+    /**
+     * Query against all fields
+     * @param       []                      $query              Values to query against
+     * @param       bool                    $ignorePagination   If true will not return pagination
+     * @param       int                     $maxLimit           If provided limit is greater than this value, set is to this value
+     * @param       int                     $maxPage            If the provided page is greater than this value, restrict it to this value
+     * @return      Country[]|\Illuminate\Pagination\LengthAwarePaginator
+     */
+    function where ($query, $ignorePagination = true, $maxLimit = 5000, $maxPage = 100)
+    {
+        $pagination                 =   $this->buildPagination($query, $maxLimit, $maxPage);
+        $qb                         =   $this->_em->createQueryBuilder();
+
+        $qb->from('postage\Models\Country', 'country')
+            ->leftJoin('country.continent', 'continent', Query\Expr\Join::ON)
+            ->innerJoin('country.subdivisions', 'subdivision', Query\Expr\Join::ON);
+
+        if (!is_null(ArrayUtil::get($query['countryIds'])))
+            $qb->andWhere($qb->expr()->in('country.id', $query['countryIds']));
+
+        if (!is_null(ArrayUtil::get($query['continentIds'])))
+            $qb->andWhere($qb->expr()->in('continent.id', $query['continentIds']));
+
+        if (!is_null(ArrayUtil::get($query['subdivisionIds'])))
+            $qb->andWhere($qb->expr()->in('subdivision.id', $query['subdivisionIds']));
+
+        if (!is_null(ArrayUtil::get($query['isEU'])))
+        {
+            $qb->andWhere('country.isEU                 =               :isEU')
+                ->setParameter('isEU',                                  $query['isEU']);
+        }
+
+        if (!is_null(ArrayUtil::get($query['isUK'])))
+        {
+            $qb->andWhere('country.isUK                 =               :isUK')
+                ->setParameter('isUK',                                  $query['isUK']);
+        }
+
+        if (!is_null(ArrayUtil::get($query['isUSTerritory'])))
+        {
+            $qb->andWhere('country.isUSTerritory        =              :isUSTerritory')
+                ->setParameter('isUSTerritory',                         $query['isUSTerritory']);
+        }
+
+        $qb->orderBy('country.id', 'ASC');
+
+        if ($ignorePagination)
+            return $qb->getQuery()->getResult();
+        else
+            return $this->paginate($qb->getQuery(), $pagination['limit']);
+    }
 
 
     /**
