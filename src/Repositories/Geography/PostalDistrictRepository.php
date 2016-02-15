@@ -2,71 +2,50 @@
 namespace app\Repositories\Geography;
 
 
-use app\Utilities\ArrayUtil;
+use app\Models\Geography\PostalDistrict;
 use Doctrine\ORM\Query;
+use LaravelDoctrine\ORM\Pagination\Paginatable;
 
-class PostalDistrictRepository extends BaseGeographyRepository {
+class PostalDistrictRepository extends BaseGeographyRepository
+{
 
-    function where($params) {
-        $qb = $this->_em->createQueryBuilder();
-
-        if (ArrayUtil::get($params['selector'], NULL)) {
-            $qb->select(['postalDistrict.id, postalDistrict.name']);
-        } else if (!is_null(ArrayUtil::get($params['lexicon'], NULL))) {
-            $qb->select([
-                'COUNT(postalDistrict.id) AS total',
-                'country.id AS countries_id', 'country.name AS countries_name',
-            ]);
-        } else {
-            $qb->select(['postalDistrict']);
-        }
-
-        $qb->from('app\Models\Geography\PostalDistrict', 'postalDistrict')
-            ->innerJoin('postalDistrict.country', 'country', Query\Expr\Join::ON);
+    use Paginatable;
 
 
-        if (!is_null(ArrayUtil::get($params['countryIds'], NULL))) {
-            $qb->andWhere($qb->expr()->in('IDENTITY(postalDistrict.country)', $params['countryIds']));
-        }
-
-        // Order by
-        if (is_null(ArrayUtil::get($params['orderBy'], NULL))) {
-            $qb->orderBy('postalDistrict.id', 'ASC');
-        }
-
-
-        if (is_null(ArrayUtil::get($params['lexicon'], NULL))) {
-            return $qb->getQuery()->getResult();
-        } else {
-            $qb->addGroupBy('country');
-            $result                                 =       $qb->getQuery()->getResult();
-
-            $lexicon = [
-                'countries'         =>  [],
-            ];
-
-            return $this->buildLexicon($lexicon, $result);
-        }
+    /**
+     * Get a single PostalDistrict object by its id
+     * @param       int                 $id                 Id to query against
+     * @return      PostalDistrict|null
+     */
+    public function getOneById($id)
+    {
+        return $this->find($id);
     }
 
-    private function buildLexicon($lexicon, $result) {
-        $lexiconKeySet = array_keys($lexicon);
-        foreach($result AS $resultItem) {
-            foreach ($lexiconKeySet AS $lexiconKey) {
-                $key = array_search($resultItem[$lexiconKey.'_'.'id'], array_column($lexicon[$lexiconKey], 'id'));
-                if ($key !== false) {
-                    $lexicon[$lexiconKey][$key]['total'] += $resultItem['total'];
-                } else {
-                    echo array_search($resultItem[$lexiconKey.'_'.'id'], array_column($lexicon[$lexiconKey], 'id')) . PHP_EOL;
-                    array_push($lexicon[$lexiconKey], [
-                        'id' => $resultItem[$lexiconKey.'_'.'id'],
-                        'name' => $resultItem[$lexiconKey.'_'.'name'],
-                        'total' => $resultItem['total']
-                    ]);
-                }
-            }
-        }
-        return $lexicon;
+    /**
+     * Get a single PostalDistrict object by its name
+     * @param       string              $name               Name to query against
+     * @return      PostalDistrict|null
+     */
+    public function getOneByName($name)
+    {
+        return $this->findOneBy(['name' => $name]);
     }
 
+    /**
+     * Get a single PostalDistrict object by its symbol
+     * @param       string              $symbol             Symbol to query against
+     * @return      PostalDistrict[]
+     */
+    public function getOneBySymbol($symbol)
+    {
+        return $this->findOneBy(['symbol' => $symbol]);
+    }
+
+    public function getAllCanadianPostalDistricts()
+    {
+        return $this->findBy([
+            'countryId'     =>  38
+        ]);
+    }
 }
