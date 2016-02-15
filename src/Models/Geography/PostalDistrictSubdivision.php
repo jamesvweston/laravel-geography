@@ -3,9 +3,9 @@ namespace app\Models\Geography;
 
 
 use Respect\Validation\Validator as v;
-use Auth;
 
-class PostalDistrictSubdivision extends BaseModel implements \JsonSerializable {
+class PostalDistrictSubdivision extends BaseModel implements \JsonSerializable
+{
 
     public $id;
     protected $statusId;
@@ -21,29 +21,25 @@ class PostalDistrictSubdivision extends BaseModel implements \JsonSerializable {
     protected $subdivision;
     //  END oneToMany relationships
 
-    public function __construct ($data = null) {
-        $this->id                               =       NULL;
-        $this->statusId                         =       1;
-        $this->createdAt                        =       new \DateTime();
-        $this->expiresAt                        =       new \DateTime('2038-01-01 01:01:01');
-        $this->routeTransaction                 =       Auth::getSession()->get('routeTransaction');
+    public function __construct ($data = null)
+    {
+        $this->id                               =   NULL;
+        $this->statusId                         =   1;
+        $this->createdAt                        =   new \DateTime();
+        $this->expiresAt                        =   new \DateTime('2038-01-01 01:01:01');
 
         if (is_array($data)) {
         }
     }
 
-    protected function getValidationRules() {
-        return [
-            v::attribute('symbol',                      v::notEmpty()->alpha()->length(3, 50)->UniqueCarrierSymbol()),
-            v::attribute('routeTransaction',            v::instance('app\\Models\\RouteTransaction')),
-            v::attribute('statusId',                    v::notEmpty()->int()->positive()),
-            v::attribute('createdAt',                   v::notEmpty()->date()),
-            v::attribute('expiresAt',                   v::notEmpty()->date()),
-        ];
+    public function validate()
+    {
+
     }
 
-    public function jsonSerialize() {
-        $postalDistrictSubdivision              =       call_user_func('get_object_vars', $this);
+    public function jsonSerialize()
+    {
+        $postalDistrictSubdivision              =   call_user_func('get_object_vars', $this);
         return array_except($postalDistrictSubdivision, ['__initializer__', '__cloner__', '__isInitialized__']);
     }
 
@@ -53,7 +49,8 @@ class PostalDistrictSubdivision extends BaseModel implements \JsonSerializable {
      * Get the PostalDistrict that owns the PostalDistrictSubdivision
      * @return PostalDistrict $postalDistrict
      */
-    public function getPostalDistrict() {
+    public function getPostalDistrict()
+    {
         return $this->postalDistrict;
     }
 
@@ -61,7 +58,8 @@ class PostalDistrictSubdivision extends BaseModel implements \JsonSerializable {
      * Get the Subdivision for the PostalDistrictSubdivision
      * @return Subdivision $subdivision
      */
-    public function getSubdivision() {
+    public function getSubdivision()
+    {
         return $this->subdivision;
     }
     // END Getters
@@ -72,14 +70,16 @@ class PostalDistrictSubdivision extends BaseModel implements \JsonSerializable {
      * Set the PostalDistrict for the PostalDistrictSubdivision
      * @param PostalDistrict $postalDistrict
      */
-    public function setPostalDistrict(PostalDistrict $postalDistrict) {
+    public function setPostalDistrict(PostalDistrict $postalDistrict)
+    {
         $this->postalDistrict = $postalDistrict;
     }
     /**
      * Set the Subdivision for the PostalDistrictSubdivision
      * @param Subdivision $subdivision
      */
-    public function setSubDivision(Subdivision $subdivision) {
+    public function setSubDivision(Subdivision $subdivision)
+    {
         $this->subdivision = $subdivision;
     }
     // END Setters

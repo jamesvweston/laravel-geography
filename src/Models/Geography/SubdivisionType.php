@@ -21,33 +21,27 @@ class SubdivisionType extends BaseModel implements \JsonSerializable {
     protected $subdivisions;
     //  END oneToMany relationships
 
-    public function __construct ($data = null) {
-        $this->id                               =       NULL;
-        $this->statusId                         =       1;
-        $this->createdAt                        =       new \DateTime();
-        $this->expiresAt                        =       new \DateTime('2038-01-01 01:01:01');
-        $this->routeTransaction                 =       Auth::getSession()->get('routeTransaction');
+    public function __construct ($data = null)
+    {
+        $this->id                               =   NULL;
+        $this->statusId                         =   1;
+        $this->createdAt                        =   new \DateTime();
+        $this->expiresAt                        =   new \DateTime('2038-01-01 01:01:01');
 
-        if (is_array($data)) {
+        if (is_array($data))
+        {
+
         }
     }
 
-    protected function getValidationRules() {
-        v::with('app\\Models\\Validation\\');
+    public function validate()
+    {
 
-        $this->subdivisions                     =       new ArrayCollection();
-
-        return [
-            v::attribute('symbol',                      v::notEmpty()->alpha()->length(3, 50)->UniqueCarrierSymbol()),
-            v::attribute('routeTransaction',            v::instance('app\\Models\\RouteTransaction')),
-            v::attribute('statusId',                    v::notEmpty()->int()->positive()),
-            v::attribute('createdAt',                   v::notEmpty()->date()),
-            v::attribute('expiresAt',                   v::notEmpty()->date()),
-        ];
     }
 
-    public function jsonSerialize() {
-        $subdivisionType                        =       call_user_func('get_object_vars', $this);
+    public function jsonSerialize()
+    {
+        $subdivisionType                        =   call_user_func('get_object_vars', $this);
         return array_except($subdivisionType, ['__initializer__', '__cloner__', '__isInitialized__']);
     }
 
@@ -55,7 +49,8 @@ class SubdivisionType extends BaseModel implements \JsonSerializable {
      * Get an ArrayCollection of Subdivision objects that use this SubdivisionType
      * @return ArrayCollection
      */
-    public function getSubdivisions() {
+    public function getSubdivisions()
+    {
         return $this->subdivisions;
     }
 

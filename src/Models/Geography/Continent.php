@@ -2,9 +2,12 @@
 namespace app\Models\Geography;
 
 
+use app\Utilities\ArrayUtil;
+use Doctrine\Common\Collections\ArrayCollection;
 use Respect\Validation\Validator as v;
 
-class Continent implements \JsonSerializable {
+class Continent implements \JsonSerializable
+{
 
     public $id;
     public $name;
@@ -13,45 +16,44 @@ class Continent implements \JsonSerializable {
     protected $createdAt;
     protected $expiresAt;
 
-    // BEGIN oneToMany relationships
+    /**
+     * @var     ArrayCollection
+     */
     protected $countries;
-    // END oneToMany relationships
 
-    public function __construct ($data = null) {
-        $this->id                               =       NULL;
-        $this->statusId                         =       1;
-        $this->createdAt                        =       new \DateTime();
-        $this->expiresAt                        =       new \DateTime('2038-01-01 01:01:01');
+    public function __construct ($data = null)
+    {
+        $this->id                               =   NULL;
+        $this->statusId                         =   1;
 
-        $this->countries                        =       new ArrayCollection();
+        $this->countries                        =   new ArrayCollection();
 
         if (is_array($data)) {
-            $this->name                         =       ArrayUtil::get($data['name'], '');
+            $this->name                         =   ArrayUtil::get($data['name']);
+            $this->symbol                       =   ArrayUtil::get($data['symbol']);
+            $this->expiresAt                    =   ArrayUtil::get($data['expiresAt']);
         }
     }
 
-    protected function getValidationRules() {
-        return [
-            v::attribute('name',                        v::notEmpty()->length(1, 30)->alpha()),
-            v::attribute('routeTransaction',            v::instance('app\\Models\\RouteTransaction')),
-            v::attribute('statusId',                    v::notEmpty()->int()->positive()),
-            v::attribute('createdAt',                   v::notEmpty()->date()),
-            v::attribute('expiresAt',                   v::notEmpty()->date()),
-        ];
+    public function validate()
+    {
+
     }
 
-    public function jsonSerialize() {
-        $continent                              =       call_user_func('get_object_vars', $this);
+    public function jsonSerialize()
+    {
+        $continent                              =   call_user_func('get_object_vars', $this);
         return array_except($continent, ['__initializer__', '__cloner__', '__isInitialized__']);
     }
 
 
     // BEGIN Getters
     /**
-     * Get an ArrayCollection of Country objects that belong to this Continent
-     * @return ArrayCollection Country
+     * Get all Country objects that belong to this Continent
+     * @return      ArrayCollection
      */
-    public function getCountries() {
+    public function getCountries()
+    {
         return $this->countries;
     }
     // END Getters
@@ -60,9 +62,10 @@ class Continent implements \JsonSerializable {
     // BEGIN Setters
     /**
      * Add a Country object to the Continent
-     * @param Country $country
+     * @param       Country $country
      */
-    public function addCountry(Country $country) {
+    public function addCountry(Country $country)
+    {
         $this->countries->add($country);
     }
 

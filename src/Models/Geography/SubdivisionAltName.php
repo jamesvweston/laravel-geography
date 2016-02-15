@@ -5,7 +5,8 @@ namespace app\Models\Geography;
 use Respect\Validation\Validator as v;
 use Auth;
 
-class SubdivisionAltName extends BaseModel implements \JsonSerializable {
+class SubdivisionAltName extends BaseModel implements \JsonSerializable
+{
 
     public $id;
     public $name;
@@ -13,40 +14,34 @@ class SubdivisionAltName extends BaseModel implements \JsonSerializable {
     protected $createdAt;
     protected $expiresAt;
 
-    //  BEGIN manyToOne relationships
-    protected $routeTransaction;
-    //  END manyToOne relationships
 
-    //  BEGIN oneToMany relationships
+    /**
+     * @var     Subdivision
+     */
     protected $subdivision;
-    //  END oneToMany relationships
 
-    public function __construct ($data = null) {
-        $this->id                               =       NULL;
-        $this->statusId                         =       1;
-        $this->createdAt                        =       new \DateTime();
-        $this->expiresAt                        =       new \DateTime('2038-01-01 01:01:01');
-        $this->routeTransaction                 =       Auth::getSession()->get('routeTransaction');
+    public function __construct ($data = null)
+    {
+        $this->id                               =   NULL;
+        $this->statusId                         =   1;
+        $this->createdAt                        =   new \DateTime();
+        $this->expiresAt                        =   new \DateTime('2038-01-01 01:01:01');
 
-        if (is_array($data)) {
+        if (is_array($data))
+        {
+
         }
     }
 
-    protected function getValidationRules() {
-        v::with('app\\Models\\Validation\\');
+    public function validate()
+    {
 
-        return [
-            v::attribute('symbol',                      v::notEmpty()->alpha()->length(3, 50)->UniqueCarrierSymbol()),
-            v::attribute('routeTransaction',            v::instance('app\\Models\\RouteTransaction')),
-            v::attribute('statusId',                    v::notEmpty()->int()->positive()),
-            v::attribute('createdAt',                   v::notEmpty()->date()),
-            v::attribute('expiresAt',                   v::notEmpty()->date()),
-        ];
     }
 
-    public function jsonSerialize() {
-        $subdivisionAltName                     =       call_user_func('get_object_vars', $this);
-        $subdivisionAltName['subdivision']      =       $this->subdivision;
+    public function jsonSerialize()
+    {
+        $subdivisionAltName                     =   call_user_func('get_object_vars', $this);
+        $subdivisionAltName['subdivision']      =   $this->subdivision;
         return array_except($subdivisionAltName, ['__initializer__', '__cloner__', '__isInitialized__']);
     }
 
@@ -56,7 +51,8 @@ class SubdivisionAltName extends BaseModel implements \JsonSerializable {
      * Get the Subdivision object for the SubdivisionAltName
      * @return Subdivision
      */
-    public function getSubdivision() {
+    public function getSubdivision()
+    {
         return $this->subdivision;
     }
     // END Getters
@@ -67,7 +63,8 @@ class SubdivisionAltName extends BaseModel implements \JsonSerializable {
      * Set the Subdivision for the SubdivisionAltName
      * @param Subdivision $subdivision
      */
-    public function setSubdivision(Subdivision $subdivision) {
+    public function setSubdivision(Subdivision $subdivision)
+    {
         $this->subdivision = $subdivision;
     }
     // END Setters

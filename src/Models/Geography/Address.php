@@ -67,7 +67,7 @@ class Address extends BaseModel implements \JsonSerializable
 
 
     /**
-     * @var     Subdivision
+     * @var     Subdivision|null
      */
     protected $subdivision;
     /**
@@ -77,52 +77,35 @@ class Address extends BaseModel implements \JsonSerializable
 
     public function __construct ($data = null)
     {
-        $this->id                               =       NULL;
-        $this->statusId                         =       1;
-        $this->createdAt                        =       new \DateTime();
-        $this->expiresAt                        =       new \DateTime('2038-01-01 01:01:01');
+        $this->id                               =   NULL;
+        $this->statusId                         =   1;
 
-        if (is_array($data)) {
-            $this->name                         =       ArrayUtil::get($data['name'], NULL);
-            $this->company                      =       ArrayUtil::get($data['company'], NULL);
-            $this->street1                      =       ArrayUtil::get($data['street1'], NULL);
-            $this->street2                      =       ArrayUtil::get($data['street2'], NULL);
-            $this->city                         =       ArrayUtil::get($data['city'], NULL);
-            $this->stateProvince                =       ArrayUtil::get($data['stateProvince'], NULL);
-            $this->postalCode                   =       ArrayUtil::get($data['postalCode'], NULL);
-            $this->subdivision                  =       ArrayUtil::get($data['subdivision'], NULL);
-            $this->country                      =       ArrayUtil::get($data['country'], NULL);
-            $this->phone                        =       ArrayUtil::get($data['phone'], NULL);
-            $this->email                        =       ArrayUtil::get($data['email'], NULL);
+        if (is_array($data))
+        {
+            $this->name                         =   ArrayUtil::get($data['name']);
+            $this->company                      =   ArrayUtil::get($data['company']);
+            $this->street1                      =   ArrayUtil::get($data['street1']);
+            $this->street2                      =   ArrayUtil::get($data['street2']);
+            $this->city                         =   ArrayUtil::get($data['city']);
+            $this->stateProvince                =   ArrayUtil::get($data['stateProvince']);
+            $this->postalCode                   =   ArrayUtil::get($data['postalCode']);
+            $this->subdivision                  =   ArrayUtil::get($data['subdivision']);
+            $this->country                      =   ArrayUtil::get($data['country']);
+            $this->phone                        =   ArrayUtil::get($data['phone']);
+            $this->email                        =   ArrayUtil::get($data['email']);
         }
     }
 
-    protected function getValidationRules()
+    public function validate()
     {
-        return [
-            v::attribute('name',                        v::notEmpty()->length(3, 50)),
-            v::attribute('company',                     v::length(NULL, 50)),
-            v::attribute('street1',                     v::notEmpty()->length(3, 50)),
-            v::attribute('street2',                     v::length(NULL, 50)),
-            v::attribute('city',                        v::length(NULL, 50)),
-            v::attribute('stateProvince',               v::oneOf(v::nullValue(), v::length(NULL, 50))),
-            v::attribute('postalCode',                  v::oneOf(v::nullValue(), v::length(NULL, 50))),
-            v::attribute('subdivision',                 v::oneOf(v::nullValue(), v::instance('app\\Models\\Subdivision'))),
-            v::attribute('country',                     v::instance('app\\Models\\Country')),
-            v::attribute('phone',                       v::oneOf(v::nullValue(), v::notEmpty()->length(NULL, 20))),
-            v::attribute('email',                       v::length(NULL, 50)),
-            v::attribute('routeTransaction',            v::instance('app\\Models\\RouteTransaction')),
-            v::attribute('statusId',                    v::notEmpty()->int()->positive()),
-            v::attribute('createdAt',                   v::notEmpty()->date()),
-            v::attribute('expiresAt',                   v::notEmpty()->date()),
-        ];
+
     }
 
     public function jsonSerialize()
     {
-        $address                                =       $this->getPublicVars();
-        $address['subdivision']                 =       !is_null($this->subdivision) ? $this->subdivision->jsonSerialize() : NULL;
-        $address['country']                     =       !is_null($this->country) ? $this->country->jsonSerialize() : NULL;
+        $address                                =   $this->getPublicVars();
+        $address['subdivision']                 =   !is_null($this->subdivision) ? $this->subdivision->jsonSerialize() : NULL;
+        $address['country']                     =   !is_null($this->country) ? $this->country->jsonSerialize() : NULL;
         return array_except($address, ['__initializer__', '__cloner__', '__isInitialized__']);
     }
 
@@ -152,7 +135,7 @@ class Address extends BaseModel implements \JsonSerializable
      */
     public function setCountry(Country $country)
     {
-        $this->country = $country;
+        $this->country                          =   $country;
     }
 
     /**
@@ -161,7 +144,7 @@ class Address extends BaseModel implements \JsonSerializable
      */
     public function setSubdivision(Subdivision $subdivision)
     {
-        $this->subdivision = $subdivision;
+        $this->subdivision                      =   $subdivision;
     }
 
 }
