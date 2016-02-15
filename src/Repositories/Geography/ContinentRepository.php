@@ -87,10 +87,10 @@ class ContinentRepository extends BaseGeographyRepository
     }
 
     /**
-     * Get the Antartica continent object
+     * Get the Antarctica continent object
      * @return      Continent
      */
-    public function getAntartcica()
+    public function getAntarctica()
     {
         return $this->find(2);
     }

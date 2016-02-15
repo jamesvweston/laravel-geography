@@ -9,7 +9,7 @@ class Address extends BaseModel implements \JsonSerializable
 {
 
     /**
-     * Auto-incrementing id
+     * Unique id for the Address
      * @var         int
      */
     public $id;

@@ -9,9 +9,25 @@ use Respect\Validation\Validator as v;
 class Country implements \JsonSerializable
 {
 
+    /**
+     * Unique id for the Country
+     * @var     int
+     */
     public $id;
+    /**
+     * Unique name for the Country
+     * @var     string
+     */
     public $name;
+    /**
+     * Unique two character string for the Country
+     * @var     string
+     */
     public $iso2;
+    /**
+     * Unique three character string for the Country
+     * @var     string
+     */
     public $iso3;
     public $isoNumeric;
     public $fipsCode;

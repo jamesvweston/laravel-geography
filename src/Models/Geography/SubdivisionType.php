@@ -13,13 +13,10 @@ class SubdivisionType extends BaseModel implements \JsonSerializable {
     protected $createdAt;
     protected $expiresAt;
 
-    //  BEGIN manyToOne relationships
-    protected $routeTransaction;
-    //  END manyToOne relationships
-
-    //  BEGIN oneToMany relationships
+    /**
+     * @var     ArrayCollection
+     */
     protected $subdivisions;
-    //  END oneToMany relationships
 
     public function __construct ($data = null)
     {

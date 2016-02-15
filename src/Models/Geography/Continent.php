@@ -9,8 +9,20 @@ use Respect\Validation\Validator as v;
 class Continent implements \JsonSerializable
 {
 
+    /**
+     * Unique id for the Continent
+     * @var     int
+     */
     public $id;
+    /**
+     * Unique name for the Continent
+     * @var     string
+     */
     public $name;
+    /**
+     * Unique name for the Continent
+     * @var     string
+     */
     public $symbol;
     protected $statusId;
     protected $createdAt;
