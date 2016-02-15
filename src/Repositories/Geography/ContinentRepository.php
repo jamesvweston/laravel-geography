@@ -24,7 +24,7 @@ class ContinentRepository extends BaseGeographyRepository
 
     /**
      * Get a single Continent object by its name
-     * @param       int                 $name               Name to query against
+     * @param       string              $name               Name to query against
      * @return      Continent|null
      */
     public function getByName($name)
@@ -34,7 +34,7 @@ class ContinentRepository extends BaseGeographyRepository
 
     /**
      * Get a single Continent object by its symbol
-     * @param       int                 $symbol             Symbol to query against
+     * @param       string              $symbol             Symbol to query against
      * @return      Continent|null
      */
     public function getBySymbol($symbol)
